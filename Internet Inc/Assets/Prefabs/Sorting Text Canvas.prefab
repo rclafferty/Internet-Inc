@@ -181,8 +181,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17.14, y: 11.41}
-  m_SizeDelta: {x: 297.778, y: 120.874}
+  m_AnchoredPosition: {x: 19.129, y: 11.73}
+  m_SizeDelta: {x: 347.541, y: 120.874}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8728084040895415697
 CanvasRenderer:
@@ -212,7 +212,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 21b97ce87559cd744ac4afb42b4356f4, type: 3}
-    m_FontSize: 35
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -282,7 +282,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 295.52, y: 120.5}
+  m_Size: {x: 343.48, y: 120.5}
   m_EdgeRadius: 0
 --- !u!1 &8728084041245438139
 GameObject:

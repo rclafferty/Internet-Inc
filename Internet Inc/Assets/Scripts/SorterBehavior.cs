@@ -48,7 +48,7 @@ public class SorterBehavior : MonoBehaviour
                 {
                     gameplayManager.CorrectSort();
 
-                    Destroy(sb.gameObject);
+                    // Destroy(sb.gameObject);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ public class SorterBehavior : MonoBehaviour
                 {
                     gameplayManager.CorrectSort();
 
-                    Destroy(sb.gameObject);
+                    // Destroy(sb.gameObject);
                 }
                 else
                 {

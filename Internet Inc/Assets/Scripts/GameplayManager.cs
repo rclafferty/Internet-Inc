@@ -11,14 +11,65 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] bool isTLD;
 
     int currentIndex;
+    int currentDomain;
 
     [Header("TLD Values")]
-    [SerializeField] string[] domainsTLD = { "gov", "net", "com" };
-    string[] requestStringsTLD = { "www.abc.gov", "www.iknowyou.net", "www.meetnewfriends.com" };
+    string[] domainsTLD = {
+        "gov",
+        "net",
+        "com"
+    };
+    string[] requestStringsTLD = {
+        // *.gov URLs
+        "www.abc.gov",
+        "www.mygovernment.gov",
+        "www.yourgovernment.gov",
+        "www.anarchy.gov",
+        "www.politicians.gov",
+        "www.galactic.gov",
+
+        // *.net URLs
+        "www.iknowyou.net",
+        "www.youknowme.net",
+        "www.birdies.net",
+        "www.bicyclefriends.net",
+        "www.myinternet.net",
+        "www.mytelephone.net",
+
+        // *.com URLs
+        "www.mybusiness.com",
+        "www.travelwithme.com",
+        "www.ilikedancing.com",
+        "www.socialpeople.com",
+        "www.irememberyou.com",
+        "www.meetmyancestors.com"
+    };
 
     [Header("Authoritative Values")]
-    [SerializeField] string[] domainsAuthoritative = { "facebook", "twitter", "instagram" };
-    string[] requestStringsAuthoritative = { "www.facebook.com", "www.twitter.com", "www.instagram.com" };
+    string[] domainsAuthoritative = {
+        "mybusiness",
+        "travelwithme",
+        "ilikedancing"
+    };
+    string[] requestStringsAuthoritative = {
+        // *.mybusiness.com
+        "www.mybusiness.com",
+        "joinme.mybusiness.com",
+        "shop.mybusiness.com",
+        "about.mybusiness.com",
+
+        // *.travelwithme.com
+        "www.travelwithme.com",
+        "travel.travelwithme.com",
+        "where.travelwithme.com",
+        "souvenirs.travelwithme.com",
+
+        // *.ilikedancing.com
+        "www.ilikedancing.com",
+        "join.ilikedancing.com",
+        "performances.ilikedancing.com",
+        "staff.ilikedancing.com"
+    };
 
     [Header("Preset Values")]
     [SerializeField] GameObject requestObjectPrefab;
@@ -37,6 +88,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] Text levelText;
     [SerializeField] Text equivalenceText;
     [SerializeField] Text incorrectText;
+    [SerializeField] Text requestText;
     [SerializeField] Text[] sortingBoxText;
 
     List<Attempt> attempts;
@@ -45,6 +97,9 @@ public class GameplayManager : MonoBehaviour
 
     private void Awake()
     {
+        currentIndex = -1;
+        currentDomain = -1;
+
         string name = SceneManager.GetActiveScene().name;
         if (name == "authoritative")
         {
@@ -90,7 +145,7 @@ public class GameplayManager : MonoBehaviour
             sb.isAuthoritative = isAuthoritative;
             sb.isTopLevel = isTLD;
 
-            sortingBoxText[i].text = "Forward\nto\n" + domains[i].ToUpper();
+            sortingBoxText[i].text = "Forward\nto\n" + domains[i].ToLower();
         }
 
         advanceUI.enabled = false;
@@ -106,18 +161,24 @@ public class GameplayManager : MonoBehaviour
 
     public void NewRequest()
     {
-        requestObject = Instantiate(requestObjectPrefab);
+        int numberPerDomain = requestStrings.Length / domains.Length;
+        // requestObject = Instantiate(requestObjectPrefab);
 
-        int r = Random.Range(0, sortingBoxes.Length);// TODO: Change to # of prompts, not boxes
+        int r = currentIndex; // TODO: Change to # of prompts, not boxes
+        int tempDomain = currentDomain;
         do
         {
-            r = Random.Range(0, sortingBoxes.Length);
-        } while (r == currentIndex);
+            r = Random.Range(0, requestStrings.Length);
+            tempDomain = r / numberPerDomain;
+        } while (r == currentIndex || tempDomain == currentDomain);
 
         currentIndex = r;
+        currentDomain = tempDomain;
 
-        requestObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
-        requestObject.GetComponent<SpriteRenderer>().sprite = null; // requestSprites[r];
+        // requestObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
+        requestText.text = requestStrings[r];
+        requestText.gameObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
+        // requestObject.GetComponent<SpriteRenderer>().sprite = null; // requestSprites[r];
     }
 
     public void CorrectSort()

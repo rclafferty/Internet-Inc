@@ -752,10 +752,13 @@ MonoBehaviour:
   - {fileID: 6435319709536928017}
   - {fileID: 1100847806}
   - {fileID: 416370578}
+  advanceUI: {fileID: 0}
   scoreText: {fileID: 1511484320}
   levelText: {fileID: 1511484319}
   equivalenceText: {fileID: 1511484318}
   incorrectText: {fileID: 1511484317}
+  requestText: {fileID: 0}
+  sortingBoxText: []
 --- !u!4 &1859953296
 Transform:
   m_ObjectHideFlags: 0
@@ -781,6 +784,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AdvanceUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889182089544641735, guid: ad6a66cc8d8d2f5458a7efe1fe8e3cb4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889182089544641731, guid: ad6a66cc8d8d2f5458a7efe1fe8e3cb4,
         type: 3}

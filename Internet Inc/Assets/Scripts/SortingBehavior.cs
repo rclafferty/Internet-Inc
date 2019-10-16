@@ -33,7 +33,7 @@ public class SortingBehavior : MonoBehaviour
         transform.position = new Vector3(worldPoint.x, worldPoint.y, transform.position.z);
         transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        transform.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        // transform.GetComponent<SpriteRenderer>().sortingOrder = 10;
     }
 
     public void OnMouseUp()
@@ -41,7 +41,7 @@ public class SortingBehavior : MonoBehaviour
         transform.position = initPosition;
         transform.rotation = initRotation;
 
-        transform.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        // transform.GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 
     public string Target { get; set; }
