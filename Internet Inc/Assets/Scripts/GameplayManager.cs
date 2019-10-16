@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
@@ -31,12 +32,33 @@ public class GameplayManager : MonoBehaviour
     string[] domains;
 
     [Header("UI")]
+    [SerializeField] Canvas advanceUI;
     [SerializeField] Text scoreText;
     [SerializeField] Text levelText;
     [SerializeField] Text equivalenceText;
     [SerializeField] Text incorrectText;
-    int score;
-    int incorrect;
+    [SerializeField] Text[] sortingBoxText;
+
+    List<Attempt> attempts;
+
+    float time;
+
+    private void Awake()
+    {
+        string name = SceneManager.GetActiveScene().name;
+        if (name == "authoritative")
+        {
+            isAuthoritative = true;
+            isTLD = false;
+        }
+        else if (name == "top_level")
+        {
+            isAuthoritative = false;
+            isTLD = true;
+        }
+
+        attempts = new List<Attempt>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -67,23 +89,26 @@ public class GameplayManager : MonoBehaviour
             sb.Target = domains[i];
             sb.isAuthoritative = isAuthoritative;
             sb.isTopLevel = isTLD;
+
+            sortingBoxText[i].text = "Forward\nto\n" + domains[i].ToUpper();
         }
 
-        SetScore(0);
+        advanceUI.enabled = false;
+        SetScore();
         NewRequest();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        time += Time.deltaTime;
     }
 
     public void NewRequest()
     {
         requestObject = Instantiate(requestObjectPrefab);
 
-        int r = Random.Range(0, sortingBoxes.Length);
+        int r = Random.Range(0, sortingBoxes.Length);// TODO: Change to # of prompts, not boxes
         do
         {
             r = Random.Range(0, sortingBoxes.Length);
@@ -92,35 +117,52 @@ public class GameplayManager : MonoBehaviour
         currentIndex = r;
 
         requestObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
-        requestObject.GetComponent<SpriteRenderer>().sprite = requestSprites[r];
+        requestObject.GetComponent<SpriteRenderer>().sprite = null; // requestSprites[r];
     }
 
     public void CorrectSort()
     {
-        SetScore(score + 1);
+        attempts.Add(new Attempt(Time.time, true));
+        SetScore();
         NewRequest();
     }
 
-    public void SetScore(int s)
+    public float CalculateScore()
     {
-        score = s;
-        /* scoreText.text = "Correct Attempts: " + score; */
-        // incorrectText.text = "Correct Attempts: " + score + "\nIncorrect Attempts: " + incorrect;
+        if (attempts.Count > 30)
+        {
+            int difference = attempts.Count - 30;
+            for (int i = 0; i < difference; i++)
+            {
+                attempts.RemoveAt(0); // remove oldest
+            }
+        }
 
-        int attempts = score + incorrect;
-        if (attempts == 0)
+        int score = 0;
+        for (int i = 0; i < attempts.Count; i++)
+        {
+            if (attempts[i].isCorrect == true)
+            {
+                score++;
+            }
+        }
+
+        return ((float)score / attempts.Count) * 100;
+    }
+
+    public void SetScore()
+    {
+        float percentage = CalculateScore();
+
+        if (attempts.Count == 0)
         {
             scoreText.text = "Correct: 0%";
         }
         else
         {
-            if (attempts > 30)
-                attempts = 30;
-
-            float percentage = ((float)score / attempts) * 100;
             scoreText.text = "Correct: " + percentage.ToString("0") + "%";
 
-            if (attempts > 20 && percentage > 90)
+            if (attempts.Count > 20 && percentage > 90)
             {
                 Advance();
             }
@@ -129,12 +171,37 @@ public class GameplayManager : MonoBehaviour
 
     public void IncorrectSort()
     {
-        incorrect++;
-        SetScore(score);
+        attempts.Add(new Attempt(Time.time, false));
+        SetScore();
     }
 
     void Advance()
     {
-        // TODO: Move to next level
+        Debug.Log("You've been promoted!");
+        advanceUI.enabled = true;
+    }
+
+    public void AdvanceButtonClicked()
+    {
+        advanceUI.enabled = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void StayButtonClicked()
+    {
+        advanceUI.enabled = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+}
+
+public class Attempt
+{
+    public float time;
+    public bool isCorrect;
+
+    public Attempt(float t, bool c)
+    {
+        time = t;
+        isCorrect = c;
     }
 }
