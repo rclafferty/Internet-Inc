@@ -90,6 +90,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] Text incorrectText;
     [SerializeField] Text requestText;
     [SerializeField] Text[] sortingBoxText;
+    [SerializeField] Image progressBar;
+    [SerializeField] Text progressText;
 
     List<Attempt> attempts;
 
@@ -162,9 +164,8 @@ public class GameplayManager : MonoBehaviour
     public void NewRequest()
     {
         int numberPerDomain = requestStrings.Length / domains.Length;
-        // requestObject = Instantiate(requestObjectPrefab);
 
-        int r = currentIndex; // TODO: Change to # of prompts, not boxes
+        int r = currentIndex;
         int tempDomain = currentDomain;
         do
         {
@@ -175,10 +176,8 @@ public class GameplayManager : MonoBehaviour
         currentIndex = r;
         currentDomain = tempDomain;
 
-        // requestObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
         requestText.text = requestStrings[r];
         requestText.gameObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
-        // requestObject.GetComponent<SpriteRenderer>().sprite = null; // requestSprites[r];
     }
 
     public void CorrectSort()
@@ -190,12 +189,16 @@ public class GameplayManager : MonoBehaviour
 
     public float CalculateScore()
     {
+        if (attempts.Count == 0)
+            return 0.0f;
+        
         if (attempts.Count > 30)
         {
             int difference = attempts.Count - 30;
             for (int i = 0; i < difference; i++)
             {
-                attempts.RemoveAt(0); // remove oldest
+                // remove oldest
+                attempts.RemoveAt(0);
             }
         }
 
@@ -227,6 +230,19 @@ public class GameplayManager : MonoBehaviour
             {
                 Advance();
             }
+        }
+
+        if (percentage < 0.1f)
+        {
+            progressBar.transform.localScale = new Vector3(0.1f, 1, 1);
+            progressText.text = "0%";
+        }
+        else
+        {
+            float tempScore = ((attempts.Count / 20.0f)) * percentage / 10;
+            progressBar.transform.localScale = new Vector3(tempScore, 1, 1);
+
+            progressText.text = (tempScore * 10).ToString("##0") + "%";
         }
     }
 

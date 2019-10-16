@@ -32,16 +32,12 @@ public class SortingBehavior : MonoBehaviour
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDistance));
         transform.position = new Vector3(worldPoint.x, worldPoint.y, transform.position.z);
         transform.rotation = Quaternion.Euler(Vector3.zero);
-
-        // transform.GetComponent<SpriteRenderer>().sortingOrder = 10;
     }
 
     public void OnMouseUp()
     {
         transform.position = initPosition;
         transform.rotation = initRotation;
-
-        // transform.GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 
     public string Target { get; set; }
