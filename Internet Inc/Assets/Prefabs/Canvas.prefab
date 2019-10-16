@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4408129590255967323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -293,8 +293,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -693, y: 287}
-  m_SizeDelta: {x: 437.4, y: 61.4}
+  m_AnchoredPosition: {x: -606.3, y: 222}
+  m_SizeDelta: {x: 610.9, y: 61.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4408129590255967321
 CanvasRenderer:
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 5406413435242173081}
   - component: {fileID: 2149187627633381913}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Progress Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,16 +440,16 @@ RectTransform:
   m_GameObject: {fileID: 5444130851463881151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4408129589311649753}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 48.305176, y: 274.2}
+  m_SizeDelta: {x: 61.1, y: 35.8}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5406413435242173081
 CanvasRenderer:
   m_ObjectHideFlags: 0
