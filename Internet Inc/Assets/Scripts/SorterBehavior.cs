@@ -47,8 +47,6 @@ public class SorterBehavior : MonoBehaviour
                 if (parts[2] == Target)
                 {
                     gameplayManager.CorrectSort();
-
-                    Destroy(sb.gameObject);
                 }
                 else
                 {
@@ -60,8 +58,6 @@ public class SorterBehavior : MonoBehaviour
                 if (parts[1] == Target)
                 {
                     gameplayManager.CorrectSort();
-
-                    Destroy(sb.gameObject);
                 }
                 else
                 {

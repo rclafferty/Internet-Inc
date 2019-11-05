@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SortingBehavior : MonoBehaviour
+public class ClickAndDragBehavior2 : MonoBehaviour
 {
+    Rigidbody2D thisRigidbody;
+
     Vector3 mousePosition;
+
     float zDistance;
 
-    Quaternion initRotation;
     Vector3 initPosition;
-
-    [SerializeField] string thisTarget;
+    Quaternion initRotation;
 
     // Start is called before the first frame update
     void Start()
     {
+        thisRigidbody = GetComponent<Rigidbody2D>();
+
         initPosition = transform.position;
         initRotation = transform.rotation;
 
@@ -24,20 +27,24 @@ public class SortingBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        thisTarget = Target;
+        
     }
 
     private void OnMouseDrag()
     {
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDistance));
         transform.position = new Vector3(worldPoint.x, worldPoint.y, transform.position.z);
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.rotation = Quaternion.identity;
+
+        // transform.GetComponent<SpriteRenderer>().sortingOrder = 100;
     }
 
-    public void OnMouseUp()
+    private void OnMouseUp()
     {
         transform.position = initPosition;
         transform.rotation = initRotation;
+
+        // transform.GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
 
     public string Target { get; set; }
