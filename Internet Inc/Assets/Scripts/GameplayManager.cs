@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
-    const int PROMOTION_THRESHOLD = 35;
+    const int PROMOTION_THRESHOLD = 5;
     const int MAX_CONSIDERED_ATTEMPTS = 45;
     const float RED_PROGRESS_BAR_PERCENTAGE = 0.0f;
     const float YELLOW_PROGRESS_BAR_PERCENTAGE = 0.4f;
@@ -107,8 +107,6 @@ public class GameplayManager : MonoBehaviour
 
     List<Attempt> attempts;
 
-    float time;
-
     private void Awake()
     {
         currentIndex = -1;
@@ -173,7 +171,7 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+
     }
 
     public void NewRequest()
@@ -206,7 +204,8 @@ public class GameplayManager : MonoBehaviour
     {
         if (attempts.Count == 0)
             return 0.0f;
-        
+
+        Debug.Log(attempts.Count);
         if (attempts.Count > MAX_CONSIDERED_ATTEMPTS)
         {
             int difference = attempts.Count - MAX_CONSIDERED_ATTEMPTS;
@@ -330,6 +329,12 @@ public class GameplayManager : MonoBehaviour
     {
         advanceUI.enabled = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void NewLevel()
+    {
+        attempts.Clear();
+        SetScore();
     }
 }
 

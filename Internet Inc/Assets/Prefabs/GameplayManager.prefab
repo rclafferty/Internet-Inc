@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3916353000867189393
+--- !u!1 &6885488706011726106
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3916353000867189391}
-  - component: {fileID: 3916353000867189392}
+  - component: {fileID: 6885488706011726084}
+  - component: {fileID: 7626710946948469685}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3916353000867189391
+--- !u!4 &6885488706011726084
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3916353000867189393}
+  m_GameObject: {fileID: 6885488706011726106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,39 +31,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3916353000867189392
+--- !u!114 &7626710946948469685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3916353000867189393}
+  m_GameObject: {fileID: 6885488706011726106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7d88885737f9eb4ea8b0c9ebdd4724e, type: 3}
+  m_Script: {fileID: 11500000, guid: 758783f3c97f8ea40a0a70adfc0e701e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAuthoritative: 1
-  isTLD: 0
-  domainsTLD:
-  - gov
-  - net
-  - com
-  domainsAuthoritative:
-  - facebook
-  - twitter
-  - instagram
-  requestObjectPrefab: {fileID: 4159018573125738040, guid: 01ac7c868368f0b42a4e47d3f1faa2b4,
+  prefab_requestObject: {fileID: 4159018573125738040, guid: 01ac7c868368f0b42a4e47d3f1faa2b4,
     type: 3}
-  requestSprites:
-  - {fileID: 21300000, guid: 8408bc7183ec6b14698a74786560897c, type: 3}
-  - {fileID: 21300000, guid: d509d9ed34ab7c848ae6b1d399874af4, type: 3}
-  - {fileID: 21300000, guid: 02bc7ebc069ada04da80ece7f1f6a2b1, type: 3}
   sortingBoxes:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  scoreText: {fileID: 0}
-  levelText: {fileID: 0}
-  equivalenceText: {fileID: 0}
-  incorrectText: {fileID: 0}
+  sortingBoxText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  requestObjectText: {fileID: 0}
+  progressBarImage: {fileID: 0}
+  progressBarText: {fileID: 0}
+  promotionUI: {fileID: 0}
+  promotionHeader: {fileID: 0}
+  promotionText: {fileID: 0}
+  subdomainDomainsText: {fileID: 0}
+  authoritativeDomainsText: {fileID: 4900000, guid: 676005aaab201c94d91e8b10328c1e15,
+    type: 3}
+  topLevelDomainsText: {fileID: 4900000, guid: c4f8176090bd6ba46a016950cd5aa9d4, type: 3}
+  subdomainRequestsText: {fileID: 0}
+  authoritativeRequestsText: {fileID: 4900000, guid: ae2ba7808139a39409531c807fe86c34,
+    type: 3}
+  topLevelRequestsText: {fileID: 4900000, guid: f2817567451acde429e9ebb28dd0ae15,
+    type: 3}
+  subdomainInformation: {fileID: 0}
+  authoritativeInformation: {fileID: 4900000, guid: 91332e1f91c22974a94bd766c1a308f3,
+    type: 3}
+  topLevelInformation: {fileID: 4900000, guid: bb99860abbf755a41bb046ea4d371f38, type: 3}
