@@ -149,7 +149,7 @@ public class GameplayManager : MonoBehaviour
         }
         else
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            // UnityEditor.EditorApplication.isPlaying = false;
         }
 
         SorterBehavior sb;
