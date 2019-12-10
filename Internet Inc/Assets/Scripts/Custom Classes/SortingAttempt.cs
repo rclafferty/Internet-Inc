@@ -10,7 +10,7 @@ public class SortingAttempt : MonoBehaviour
     public float time;
     public bool isCorrect;
 
-    public SortingAttempt (float t, bool c)
+    public SortingAttempt(float t, bool c)
     {
         time = t;
         isCorrect = c;
@@ -23,11 +23,5 @@ public class SortingAttempt : MonoBehaviour
         {
             incorrect++;
         }
-    }
-
-    public static void Reset()
-    {
-        correct = 0;
-        incorrect = 0;
     }
 }
