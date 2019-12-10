@@ -1,3 +1,0 @@
-gov
-net
-com

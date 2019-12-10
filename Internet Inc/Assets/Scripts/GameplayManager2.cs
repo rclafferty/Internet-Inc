@@ -333,33 +333,3 @@ public class GameplayManager2 : MonoBehaviour
         SortingAttempt.Reset();
     }
 }
-
-public class SortingAttempt
-{
-    public static int correct = 0;
-    public static int incorrect = 0;
-
-    public float time;
-    public bool isCorrect;
-
-    public SortingAttempt (float t, bool c)
-    {
-        time = t;
-        isCorrect = c;
-
-        if (isCorrect)
-        {
-            correct++;
-        }
-        else
-        {
-            incorrect++;
-        }
-    }
-
-    public static void Reset()
-    {
-        correct = 0;
-        incorrect = 0;
-    }
-}
