@@ -1,2 +1,2 @@
-District Office
-EQ: Top Level Domain DNS
+Regional Office
+EQ: Top-Level Domain DNS

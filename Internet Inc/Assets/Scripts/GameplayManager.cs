@@ -6,354 +6,339 @@ using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
-    const int PROMOTION_THRESHOLD = 5;
-    const int MAX_CONSIDERED_ATTEMPTS = 45;
-    const float RED_PROGRESS_BAR_PERCENTAGE = 0.0f;
-    const float YELLOW_PROGRESS_BAR_PERCENTAGE = 0.4f;
-    const float GREEN_PROGRESS_BAR_PERCENTAGE = 0.8f;
-
-    [Header("Toggle Values")]
-    [SerializeField] bool isAuthoritative;
-    [SerializeField] bool isTLD;
-
-    int currentIndex;
-    int currentDomain;
-    [SerializeField] float percentage;
-    [SerializeField] int numAttempts;
-
+    // Possibly won't need anymore
+    public enum DNSLevel { Subdomain, Authoritative, TopLevel };
+    public DNSLevel ThisLevel { get; private set; }
     float initialTextWidth;
+    
+    List<SortingAttempt> sortingAttempts;
 
-    [Header("TLD Values")]
-    string[] domainsTLD = {
-        "gov",
-        "net",
-        "com"
-    };
-    string[] requestStringsTLD = {
-        // *.gov URLs
-        "www.abc.gov",
-        "www.mygovernment.gov",
-        "www.yourgovernment.gov",
-        "www.anarchy.gov",
-        "www.politicians.gov",
-        "www.galactic.gov",
-
-        // *.net URLs
-        "www.iknowyou.net",
-        "www.youknowme.net",
-        "www.birdies.net",
-        "www.bicyclefriends.net",
-        "www.myinternet.net",
-        "www.mytelephone.net",
-
-        // *.com URLs
-        "www.mybusiness.com",
-        "www.travelwithme.com",
-        "www.ilikedancing.com",
-        "www.socialpeople.com",
-        "www.irememberyou.com",
-        "www.meetmyancestors.com"
-    };
-
-    [Header("Authoritative Values")]
-    string[] domainsAuthoritative = {
-        "mybusiness",
-        "travelwithme",
-        "ilikedancing"
-    };
-    string[] requestStringsAuthoritative = {
-        // *.mybusiness.com
-        "www.mybusiness.com",
-        "joinme.mybusiness.com",
-        "shop.mybusiness.com",
-        "about.mybusiness.com",
-
-        // *.travelwithme.com
-        "www.travelwithme.com",
-        "travel.travelwithme.com",
-        "where.travelwithme.com",
-        "souvenirs.travelwithme.com",
-
-        // *.ilikedancing.com
-        "www.ilikedancing.com",
-        "join.ilikedancing.com",
-        "performances.ilikedancing.com",
-        "staff.ilikedancing.com"
-    };
-
-    [Header("Preset Values")]
-    [SerializeField] GameObject requestObjectPrefab;
-    GameObject requestObject;
-    [SerializeField] Sprite[] requestSprites;
-
-    [SerializeField] GameObject[] sortingBoxes;
-
-    string[] requestStrings;
-
-    string[] domains;
-
-    [Header("UI")]
-    [SerializeField] Canvas advanceUI;
-    [SerializeField] Text scoreText;
-    [SerializeField] Text levelText;
-    [SerializeField] Text equivalenceText;
-    [SerializeField] Text incorrectText;
-    [SerializeField] Text requestText;
+    [SerializeField] GameObject[] sortingBoxObjects;
     [SerializeField] Text[] sortingBoxText;
-    [SerializeField] Image progressBar;
-    [SerializeField] Text progressText;
+    [SerializeField] Text requestURL;
+
+    [SerializeField] Image progressBarImage;
+    [SerializeField] Text progressBartText;
+    [SerializeField] Text equivalenceUIText;
+
+    [SerializeField] Canvas promotionUI;
+    AdvanceUI advanceUI; // AdvanceUI component of promotionUI
     [SerializeField] Text promotionHeader;
     [SerializeField] Text promotionText;
+    [SerializeField] Text promotionTextLocation;
+    [SerializeField] Text staySubtext;
+    [SerializeField] Text advanceSubtext;
 
-    List<Attempt> attempts;
+    [SerializeField] TextAsset requestsText;
+    [SerializeField] TextAsset domainText;
+    [SerializeField] TextAsset equivalenceText;
+    [SerializeField] TextAsset certificateText;
+
+#if UNITY_EDITOR
+    const int PROMOTION_THRESHOLD = 5;
+#else
+    const int PROMOTION_THRESHOLD = 30;
+#endif
+    const float PROMOTION_PERCENTAGE = 0.9f;
+    const int MAX_CONSIDERED_ATTEMPTS = 45;
+
+    [SerializeField] float[] thresholdPercentages;
+    [SerializeField] Color[] thresholdColors;
+
+    List<string> domains;
+    List<string> requests;
+
+    int numberRequestsPerDomain;
+    int currentDomainIndex;
+    int currentRequestIndex;
+
+    bool waitingToAdvance;
 
     private void Awake()
     {
-        currentIndex = -1;
-        currentDomain = -1;
-        numAttempts = 0;
-        percentage = 0;
-        initialTextWidth = progressText.rectTransform.rect.width;
+        waitingToAdvance = false;
+        sortingAttempts = new List<SortingAttempt>();
+        domains = new List<string>();
+        requests = new List<string>();
 
-        string name = SceneManager.GetActiveScene().name;
-        if (name == "authoritative")
+        string[] domainParts;
+        string[] requestParts;
+
+        domainParts = domainText.text.Split('\n');
+        foreach (string s in domainParts)
         {
-            isAuthoritative = true;
-            isTLD = false;
-        }
-        else if (name == "top_level")
-        {
-            isAuthoritative = false;
-            isTLD = true;
+            domains.Add(s.Trim());
         }
 
-        attempts = new List<Attempt>();
+        requestParts = requestsText.text.Split('\n');
+        foreach (string s in requestParts)
+        {
+            requests.Add(s.Trim());
+        }
+
+        numberRequestsPerDomain = requests.Count / domains.Count;
+
+        string levelName = SceneManager.GetActiveScene().name;
+        if (levelName == "subdomain")
+        {
+            ThisLevel = DNSLevel.Subdomain;
+        }
+        else if (levelName == "authoritative")
+        {
+            ThisLevel = DNSLevel.Authoritative;
+        }
+        else if (levelName == "top_level")
+        {
+            ThisLevel = DNSLevel.TopLevel;
+        }
+
+        Debug.Log(ThisLevel.ToString());
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (isAuthoritative)
+        advanceUI = promotionUI.GetComponent<AdvanceUI>();
+        advanceUI.EnableUI(false, false);
+
+        equivalenceUIText.text = equivalenceText.text;
+
+        initialTextWidth = progressBartText.rectTransform.rect.width;
+
+        for (int i = 0; i < sortingBoxObjects.Length; i++)
         {
-            domains = domainsAuthoritative;
-            requestStrings = requestStringsAuthoritative;
-            levelText.text = "District Office";
-            equivalenceText.text = "EQ: Top Level Domain DNS";
-        }
-        else if (isTLD)
-        {
-            domains = domainsTLD;
-            requestStrings = requestStringsTLD;
-            levelText.text = "Coporate Office";
-            equivalenceText.text = "EQ: Root DNS";
-        }
-        else
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
+            sortingBoxObjects[i].GetComponent<SorterBehavior>().Target = domains[i];
+            sortingBoxText[i].text = "Forward\nTo\n" + domains[i].ToLower();
         }
 
-        SorterBehavior sb;
-        for(int i = 0; i < sortingBoxes.Length; i++)
-        {
-            sb = sortingBoxes[i].GetComponent<SorterBehavior>();
-            sb.Target = domains[i];
-            sb.isAuthoritative = isAuthoritative;
-            sb.isTopLevel = isTLD;
-
-            sortingBoxText[i].text = "Forward\nto\n" + domains[i].ToLower();
-        }
-
-        advanceUI.enabled = false;
         SetScore();
         NewRequest();
     }
 
-    // Update is called once per frame
-    void Update()
+    void SetScore()
     {
-
+        SetProgressBar(CalculateScore());
     }
 
-    public void NewRequest()
+    void NewRequest()
     {
-        int numberPerDomain = requestStrings.Length / domains.Length;
+        int thisRequestIndex = currentRequestIndex;
+        int thisDomainIndex = currentDomainIndex;
 
-        int r = currentIndex;
-        int tempDomain = currentDomain;
         do
         {
-            r = Random.Range(0, requestStrings.Length);
-            tempDomain = r / numberPerDomain;
-        } while (r == currentIndex || tempDomain == currentDomain);
+            thisRequestIndex = Random.Range(0, requests.Count);
+            thisDomainIndex = thisRequestIndex / numberRequestsPerDomain;
+        } while (thisRequestIndex == currentRequestIndex || thisDomainIndex == currentDomainIndex);
 
-        currentIndex = r;
-        currentDomain = tempDomain;
+        currentRequestIndex = thisRequestIndex;
+        currentDomainIndex = thisDomainIndex;
 
-        requestText.text = requestStrings[r];
-        requestText.gameObject.GetComponent<SortingBehavior>().Target = requestStrings[r];
-    }
-
-    public void CorrectSort()
-    {
-        attempts.Add(new Attempt(Time.time, true));
-        SetScore();
-        NewRequest();
+        requestURL.text = requests[currentRequestIndex];
+        requestURL.gameObject.GetComponent<SortingObjectBehavior>().Target = requests[currentRequestIndex];
     }
 
     public float CalculateScore()
     {
-        if (attempts.Count == 0)
-            return 0.0f;
-
-        Debug.Log(attempts.Count);
-        if (attempts.Count > MAX_CONSIDERED_ATTEMPTS)
+        if (sortingAttempts.Count == 0)
         {
-            int difference = attempts.Count - MAX_CONSIDERED_ATTEMPTS;
+            return 0.0f;
+        }
+
+        float scorePercentage = 0.0f;
+        if (sortingAttempts.Count > MAX_CONSIDERED_ATTEMPTS)
+        {
+            int difference = sortingAttempts.Count - MAX_CONSIDERED_ATTEMPTS;
             for (int i = 0; i < difference; i++)
             {
-                // Re-evaluate # of correct/incorrect
-                if (attempts[0].isCorrect)
+                if (sortingAttempts[0].isCorrect)
                 {
-                    Attempt.correct--;
+                    SortingAttempt.correct--;
                 }
                 else
                 {
-                    Attempt.incorrect--;
+                    SortingAttempt.incorrect--;
                 }
 
-                // remove oldest
-                attempts.RemoveAt(0);
+                sortingAttempts.RemoveAt(0);
             }
         }
 
-        percentage = (((float)Attempt.correct / attempts.Count) - ((float)Attempt.incorrect / attempts.Count)) * ((float)attempts.Count / PROMOTION_THRESHOLD);
+        float correctPercentage = (float)SortingAttempt.correct / sortingAttempts.Count;
+        float incorrectPercentage = (float)SortingAttempt.incorrect / sortingAttempts.Count;
+        float progress = (float)sortingAttempts.Count / PROMOTION_THRESHOLD;
 
-        if (percentage > 1)
+        scorePercentage = (correctPercentage - incorrectPercentage) * progress;
+
+        if (scorePercentage > 1)
         {
-            percentage = 1;
+            scorePercentage = 1;
+        }
+        
+        if (scorePercentage >= PROMOTION_PERCENTAGE && sortingAttempts.Count >= PROMOTION_THRESHOLD)
+        {
+            if (!waitingToAdvance)
+                Promote();
         }
 
-        if (percentage * 100 >= 90 && attempts.Count >= PROMOTION_THRESHOLD)
-        {
-            Advance();
-        }
-
-        return percentage;
+        return scorePercentage * 100;
     }
-    public void SetScore()
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value">Decimal value 0 to 100 representing progress percentage</param>
+    void SetProgressBar (float value)
     {
-        float progressPercent = CalculateScore();
-        percentage = progressPercent * 100;
-        numAttempts = attempts.Count;
-
-        if (attempts.Count == 0)
+        if (waitingToAdvance)
         {
-            scoreText.text = "Correct: 0%";
-
-            progressBar.transform.localScale = new Vector3(0.1f, 1, 1);
-            progressText.text = "0%";
+            progressBarImage.transform.localScale = new Vector3(100, 1, 1);
+            progressBartText.text = "100%";
+            return;
+        }
+        else if (value <= 1f)
+        {
+            progressBarImage.transform.localScale = new Vector3(1, 1, 1);
+            progressBartText.text = "0%";
+            return;
         }
         else
         {
-            progressBar.transform.localScale = new Vector3(progressPercent * 10, 1, 1);
-            progressText.text = (percentage).ToString("##0") + "%";
+            if (value > 100)
+            {
+                value = 100.0f;
+            }
+
+            progressBarImage.transform.localScale = new Vector3(value, 1, 1);
+            progressBartText.text = value.ToString("##0") + "%";
         }
 
-        if (progressPercent >= GREEN_PROGRESS_BAR_PERCENTAGE)
+        Rect textRect = progressBartText.rectTransform.rect;
+        float barWidth = progressBarImage.rectTransform.rect.width * progressBarImage.rectTransform.localScale.x;
+        float textWidth = textRect.width;
+
+        if (barWidth > initialTextWidth)
         {
-            progressBar.color = Color.green;
-        }
-        else if (progressPercent >= YELLOW_PROGRESS_BAR_PERCENTAGE)
-        {
-            progressBar.color = Color.yellow;
-        }
-        else
-        {
-            progressBar.color = Color.red;
+            textRect.width = barWidth;
+            progressBartText.rectTransform.sizeDelta = new Vector2(textRect.width, textRect.height);
         }
 
-        float barWidth = progressBar.rectTransform.rect.width;
-        float barScale = progressBar.rectTransform.localScale.x;
-        float barWidthCalculated = barWidth * barScale;
-        float textWidth = progressText.rectTransform.rect.width;
-        Rect textRect = progressText.rectTransform.rect;
-        if (barWidthCalculated > initialTextWidth)
+        for (int i = 0; i < thresholdPercentages.Length; i++)
         {
-            textRect.width = barWidthCalculated;
-            progressText.rectTransform.sizeDelta = new Vector2(textRect.width, textRect.height);
-
+            if (value >= thresholdPercentages[i])
+            {
+                progressBarImage.color = thresholdColors[i];
+                break;
+            }
         }
-        Debug.Log("Width: " + textRect.width.ToString("#0.0") + "   Bar Width: " + barWidthCalculated.ToString("#0.0"));
+
+        // progressBartText.text = ((int)(value)).ToString();
     }
 
-    public void IncorrectSort()
+    public void NewSortAttempt(bool isCorrect)
     {
-        attempts.Add(new Attempt(Time.time, false));
+        if (sortingAttempts.Count > 0)
+        {
+            // Is it an accidental duplication?
+            float time = Time.time;
+            float oldTime = sortingAttempts[sortingAttempts.Count - 1].time;
+            if (time - oldTime < 0.1f)
+            {
+                // Invalid
+                return;
+            }
+        }
+
+        sortingAttempts.Add(new SortingAttempt(isCorrect, Time.time));
         SetScore();
+        if (isCorrect)
+        {
+            NewRequest();
+        }
     }
 
-    void Advance()
+    void Promote()
     {
-        Debug.Log("You've been promoted!");
-        advanceUI.enabled = true;
+        promotionHeader.text = "You've been promoted!";
+        string line = "You've been recognized for your efforts and have been promoted to the\n\n\n\nYou may stay and practice the ## protocol or you may advance to the next office.";
 
-        string sceneName = SceneManager.GetActiveScene().name;
-        string promotionTemplateLine1 = "You've been recognized for your efforts and have been offered a promotion to the ";
-        string promotionTemplateLine2 = "You may stay and practice the ";
-        string promotionTemplateLine2part2 = " protocol or you may advance to the next office.\nWhich will you choose?";
+        string[] parts = certificateText.text.Split('\n');
 
-        if (sceneName == "sub_domain")
+        string currentProtocol = parts[0];
+        string nextOfficeLocation = parts[1];
+        string staySubtextLine1 = parts[2];
+        string staySubtextLine2 = parts[3];
+        string staySubtextString = "";
+        if (string.IsNullOrEmpty(staySubtextLine2))
         {
-            promotionHeader.text = "You've been promoted!";
-            promotionText.text = promotionTemplateLine1 + "District Office." + "\n" + promotionTemplateLine2 + "Authoritative DNS Server" + promotionTemplateLine2part2;
+            staySubtextString = staySubtextLine1 + "\n" + staySubtextLine2;
         }
-        else if (sceneName == "authoritative")
+        else
         {
-            promotionHeader.text = "You've been promoted!";
-            promotionText.text = promotionTemplateLine1 + "Corporate Office." + "\n" + promotionTemplateLine2 + "Top-Level Domain DNS Server" + promotionTemplateLine2part2;
+            staySubtextString = staySubtextLine1;
         }
-        else if (sceneName == "top_level")
+
+        string advanceSubtextLine1 = "Proceed To";
+        string advanceSubtextLine2 = nextOfficeLocation;
+        string advanceSubtextString = "";
+        if (string.IsNullOrEmpty(advanceSubtextLine2))
+        {
+            advanceSubtextString = advanceSubtextLine1 + "\n" + advanceSubtextLine2;
+        }
+        else
+        {
+            advanceSubtextString = advanceSubtextLine1;
+        }
+
+        line = line.Replace("##", currentProtocol);
+        promotionTextLocation.text = nextOfficeLocation;
+        staySubtext.text = staySubtextString;
+        advanceSubtext.text = advanceSubtextString;
+
+        if (ThisLevel == DNSLevel.TopLevel)
         {
             promotionHeader.text = "Congratulations!";
-            promotionText.text = "Now that you've pioneered your way through the company, you should consider expanding your reach internationally.\nYou may stay and practice the Root DNS Server protocol or you may continue to expand your company.\nWhich will you choose?";
+            line = "Now that you've pioneered your way through the company, you should consider expanding your reach internationally.\n\nYou may stay and practice the Root DNS Server protocol or you may continue to expand your company.";
+            promotionTextLocation.text = "";
+            staySubtext.text = "Practice Root\nDNS Lookup";
+            advanceSubtext.text = "Proceed To\nExpand Company";
         }
-    }
 
-    public void AdvanceButtonClicked()
-    {
-        advanceUI.enabled = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+        promotionText.text = line;
 
-    public void StayButtonClicked()
-    {
-        advanceUI.enabled = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void NewLevel()
-    {
-        attempts.Clear();
+        advanceUI.EnableUI(true, false);
+        waitingToAdvance = true;
+        SortingAttempt.Reset();
         SetScore();
     }
 }
 
-public class Attempt
+class SortingAttempt
 {
-    public float time;
-    public bool isCorrect;
-
     public static int correct = 0;
     public static int incorrect = 0;
 
-    public Attempt(float t, bool c)
-    {
-        time = t;
-        isCorrect = c;
+    public bool isCorrect;
+    public float time;
 
+    public SortingAttempt(bool tf, float t)
+    {
+        isCorrect = tf;
         if (isCorrect)
+        {
             correct++;
+        }
         else
+        {
             incorrect++;
+        }
+
+        time = t;
+    }
+
+    public static void Reset()
+    {
+        correct = 0;
+        incorrect = 0;
     }
 }

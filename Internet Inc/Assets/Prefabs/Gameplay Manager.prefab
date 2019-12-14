@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2823646425959849305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2823646425959849310}
+  - component: {fileID: 2823646425959849311}
+  m_Layer: 0
+  m_Name: Gameplay Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2823646425959849310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823646425959849305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2823646425959849311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823646425959849305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7c7ab9c7d08a04fa86bd8511a0b6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingBoxObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  sortingBoxText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  requestURL: {fileID: 0}
+  progressBarImage: {fileID: 0}
+  progressBartText: {fileID: 0}
+  equivalenceUIText: {fileID: 0}
+  promotionUI: {fileID: 0}
+  promotionHeader: {fileID: 0}
+  promotionText: {fileID: 0}
+  promotionTextLocation: {fileID: 0}
+  staySubtext: {fileID: 0}
+  advanceSubtext: {fileID: 0}
+  requestsText: {fileID: 4900000, guid: 4436f230618c4b44fa751b52dabf508f, type: 3}
+  domainText: {fileID: 4900000, guid: eef04a842b10e6d4ca4ca9aca550b83d, type: 3}
+  equivalenceText: {fileID: 4900000, guid: 6c7ad35c309ef46449df628479e9c965, type: 3}
+  certificateText: {fileID: 4900000, guid: 77b8eca576d08e74abca246d2a11d0ac, type: 3}
+  thresholdPercentages:
+  - 80
+  - 40
+  - 0
+  thresholdColors:
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0.9983146, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}

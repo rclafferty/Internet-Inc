@@ -1,28 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AdvanceUI : MonoBehaviour
 {
     [SerializeField] GameObject tintImage;
-    [SerializeField] GameObject backgroundImage;
-    [SerializeField] GameObject promotionHeader;
-    [SerializeField] GameObject promotionText;
-    [SerializeField] GameObject[] promotionButtons;
+    [SerializeField] GameObject certificateImage;
     [SerializeField] GameObject stayAdvanceButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        EnableUI(false);
-        // stayAdvanceButton.SetActive(false); // TODO: Implement
+        // EnableUI(true, false);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void EnableUI(bool uiActive, bool stayAdvanceActive)
+    {
+        if (uiActive)
+        {
+            stayAdvanceActive = false;
+        }
+
+        tintImage.SetActive(uiActive);
+        certificateImage.SetActive(uiActive);
+
+        stayAdvanceButton.SetActive(stayAdvanceActive);
     }
 
     public void LoadNextLevel()
@@ -32,22 +42,20 @@ public class AdvanceUI : MonoBehaviour
 
     public void Stay()
     {
-        // TODO: Disable UI
-        EnableUI(false);
-
-        stayAdvanceButton.SetActive(true);
+        EnableUI(false, true);
     }
 
-    public void EnableUI(bool tf)
+    public void Menu()
     {
-        tintImage.SetActive(tf);
-        backgroundImage.SetActive(tf);
-        promotionHeader.SetActive(tf);
-        promotionText.SetActive(tf);
-        
-        foreach (GameObject g in promotionButtons)
-        {
-            g.SetActive(tf);
-        }
+        SceneManager.LoadScene(0);
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
