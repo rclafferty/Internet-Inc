@@ -1,8 +1,65 @@
 fileFormatVersion: 2
 guid: c8363bea5ddf76f439020e540c751912
 ModelImporter:
-  serializedVersion: 26
-  internalIDToNameTable: []
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: 3dmitruk_object_01
+    100002: 3dmitruk_object_03
+    100004: 3dmitruk_object_04
+    100006: 3dmitruk_object_05
+    100008: 3dmitruk_object_06
+    100010: 3dmitruk_object_11
+    100012: 3dmitruk_object_12
+    100014: 3dmitruk_object_13
+    100016: 3dmitruk_object_17
+    100018: 3dmitruk_object_18
+    100020: 3dmitruk_object_19
+    100022: //RootNode
+    400000: 3dmitruk_object_01
+    400002: 3dmitruk_object_03
+    400004: 3dmitruk_object_04
+    400006: 3dmitruk_object_05
+    400008: 3dmitruk_object_06
+    400010: 3dmitruk_object_11
+    400012: 3dmitruk_object_12
+    400014: 3dmitruk_object_13
+    400016: 3dmitruk_object_17
+    400018: 3dmitruk_object_18
+    400020: 3dmitruk_object_19
+    400022: //RootNode
+    2300000: 3dmitruk_object_01
+    2300002: 3dmitruk_object_03
+    2300004: 3dmitruk_object_04
+    2300006: 3dmitruk_object_05
+    2300008: 3dmitruk_object_06
+    2300010: 3dmitruk_object_11
+    2300012: 3dmitruk_object_12
+    2300014: 3dmitruk_object_13
+    2300016: 3dmitruk_object_17
+    2300018: 3dmitruk_object_18
+    2300020: 3dmitruk_object_19
+    3300000: 3dmitruk_object_01
+    3300002: 3dmitruk_object_03
+    3300004: 3dmitruk_object_04
+    3300006: 3dmitruk_object_05
+    3300008: 3dmitruk_object_06
+    3300010: 3dmitruk_object_11
+    3300012: 3dmitruk_object_12
+    3300014: 3dmitruk_object_13
+    3300016: 3dmitruk_object_17
+    3300018: 3dmitruk_object_18
+    3300020: 3dmitruk_object_19
+    4300000: 3dmitruk_object_01
+    4300002: 3dmitruk_object_03
+    4300004: 3dmitruk_object_04
+    4300006: 3dmitruk_object_05
+    4300008: 3dmitruk_object_06
+    4300010: 3dmitruk_object_11
+    4300012: 3dmitruk_object_12
+    4300014: 3dmitruk_object_13
+    4300016: 3dmitruk_object_17
+    4300018: 3dmitruk_object_18
+    4300020: 3dmitruk_object_19
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -93,7 +150,6 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -101,19 +157,18 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
-    skinWeightsMode: 0
-    maxBonesPerVertex: 4
-    minBoneWeight: 0.001
-    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -122,11 +177,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 3
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -136,7 +190,6 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

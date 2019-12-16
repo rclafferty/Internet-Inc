@@ -269,7 +269,8 @@ public class GameplayManager : MonoBehaviour
         string staySubtextLine1 = parts[2];
         string staySubtextLine2 = parts[3];
         string staySubtextString = "";
-        if (string.IsNullOrEmpty(staySubtextLine2))
+        Debug.Log(staySubtextLine2);
+        if (!string.IsNullOrEmpty(staySubtextLine2))
         {
             staySubtextString = staySubtextLine1 + "\n" + staySubtextLine2;
         }
@@ -281,7 +282,8 @@ public class GameplayManager : MonoBehaviour
         string advanceSubtextLine1 = "Proceed To";
         string advanceSubtextLine2 = nextOfficeLocation;
         string advanceSubtextString = "";
-        if (string.IsNullOrEmpty(advanceSubtextLine2))
+        Debug.Log(advanceSubtextLine2);
+        if (!string.IsNullOrEmpty(advanceSubtextLine2))
         {
             advanceSubtextString = advanceSubtextLine1 + "\n" + advanceSubtextLine2;
         }
@@ -297,12 +299,16 @@ public class GameplayManager : MonoBehaviour
 
         if (ThisLevel == DNSLevel.TopLevel)
         {
+            nextOfficeLocation = "Expand Company";
+
             promotionHeader.text = "Congratulations!";
             line = "Now that you've pioneered your way through the company, you should consider expanding your reach internationally.\n\nYou may stay and practice the Root DNS Server protocol or you may continue to expand your company.";
             promotionTextLocation.text = "";
             staySubtext.text = "Practice Root\nDNS Lookup";
-            advanceSubtext.text = "Proceed To\nExpand Company";
+            advanceSubtext.text = "Proceed To\n" + nextOfficeLocation;
         }
+
+        advanceUI.SetAdvanceButtonText("Advance To " + nextOfficeLocation);
 
         promotionText.text = line;
 

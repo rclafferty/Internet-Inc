@@ -404,6 +404,40 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 533582931756233208, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582931127818203, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_Text
+      value: 'Proceed to
+
+        Main Menu'
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582931111044624, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_Text
+      value: 'This game was created by Casey Lafferty as part of his master''s research
+        in gamification under the advisement of Dr Stephen Cooper.
+
+
+        All artwork, programming, level design, animation, and other work in this
+        game were hand-made by Casey.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582931010316767, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_Text
+      value: Thanks For Playing!
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582930891527381, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_Text
+      value: 'Quit to
+
+        Desktop'
+      objectReference: {fileID: 0}
     - target: {fileID: 533582931128617492, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -514,30 +548,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 533582931010316767, guid: e68463c95dde86b4fb75167603ef5cea,
-        type: 3}
-      propertyPath: m_Text
-      value: Thanks For Playing!
-      objectReference: {fileID: 0}
     - target: {fileID: 533582931111044639, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -106
       objectReference: {fileID: 0}
-    - target: {fileID: 533582931111044624, guid: e68463c95dde86b4fb75167603ef5cea,
+    - target: {fileID: 533582930330951169, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
-      propertyPath: m_Text
-      value: 'This game was created by Casey Lafferty as part of his master''s reasearch
-        in gamification under the advisement of Dr Stephen Cooper.
-
-
-        All artwork, programming, level design, animation, and other work in this
-        game were hand-made by Casey.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 533582931756233208, guid: e68463c95dde86b4fb75167603ef5cea,
-        type: 3}
-      propertyPath: m_Text
-      value: 
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Quit
       objectReference: {fileID: 0}
     - target: {fileID: 533582931974289654, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
@@ -549,29 +568,30 @@ PrefabInstance:
       propertyPath: m_Text
       value: Menu
       objectReference: {fileID: 0}
-    - target: {fileID: 533582930330951169, guid: e68463c95dde86b4fb75167603ef5cea,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Quit
-      objectReference: {fileID: 0}
     - target: {fileID: 533582931884551558, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
       propertyPath: m_Text
       value: Quit
       objectReference: {fileID: 0}
-    - target: {fileID: 533582931127818203, guid: e68463c95dde86b4fb75167603ef5cea,
+    - target: {fileID: 533582931294582099, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
-      propertyPath: m_Text
-      value: 'Proceed to
-
-        Main Menu'
+      propertyPath: m_LocalScale.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 533582930891527381, guid: e68463c95dde86b4fb75167603ef5cea,
+    - target: {fileID: 533582931294582099, guid: e68463c95dde86b4fb75167603ef5cea,
         type: 3}
-      propertyPath: m_Text
-      value: 'Quit to
-
-        Desktop'
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582930008826524, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533582930008826524, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e68463c95dde86b4fb75167603ef5cea, type: 3}
@@ -1015,7 +1035,35 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Corporate Office
 
-        EQ: Top-Level DNS'
+        EQ: Root DNS'
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5782300524104204629, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782300524783126512, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782300522863009323, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782300523448458983, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782300523579019127, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5782300524423291074, guid: 8c06c295d3b496a4cab79e2140109b23, type: 3}
+    - {fileID: 5782300522986889033, guid: 8c06c295d3b496a4cab79e2140109b23, type: 3}
+    - {fileID: 5782300522825936330, guid: 8c06c295d3b496a4cab79e2140109b23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8c06c295d3b496a4cab79e2140109b23, type: 3}

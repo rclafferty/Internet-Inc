@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AdvanceUI : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class AdvanceUI : MonoBehaviour
     void Start()
     {
         // EnableUI(true, false);
+
+        if (SceneManager.GetActiveScene().name == "end")
+        {
+            EnableUI(true, false);
+        }
     }
 
     // Update is called once per frame
@@ -29,13 +35,20 @@ public class AdvanceUI : MonoBehaviour
             stayAdvanceActive = false;
         }
 
-        tintImage.SetActive(uiActive);
-        certificateImage.SetActive(uiActive);
+        GetComponent<Animator>().SetBool("Certificate", uiActive);
+        // tintImage.SetActive(uiActive);
+        // certificateImage.SetActive(uiActive);
 
         stayAdvanceButton.SetActive(stayAdvanceActive);
     }
 
     public void LoadNextLevel()
+    {
+        GetComponent<Animator>().SetBool("Certificate", false);
+        GetComponent<Animator>().SetBool("Next Level", true);
+    }
+
+    public void Next()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -57,5 +70,10 @@ public class AdvanceUI : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void SetAdvanceButtonText(string text)
+    {
+        stayAdvanceButton.GetComponentInChildren<Text>().text = text;
     }
 }

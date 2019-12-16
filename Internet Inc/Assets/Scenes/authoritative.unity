@@ -650,6 +650,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 533582930832100042, guid: e68463c95dde86b4fb75167603ef5cea,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Next
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e68463c95dde86b4fb75167603ef5cea, type: 3}
 --- !u!114 &641853333 stripped
@@ -885,6 +890,16 @@ PrefabInstance:
       propertyPath: gameplayManager
       value: 
       objectReference: {fileID: 628133292}
+    - target: {fileID: 5782300524783126512, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782300524783126512, guid: 8c06c295d3b496a4cab79e2140109b23,
+        type: 3}
+      propertyPath: m_Text
+      value: souveniers.travelwithme.com
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c06c295d3b496a4cab79e2140109b23, type: 3}
 --- !u!114 &1396938191 stripped
