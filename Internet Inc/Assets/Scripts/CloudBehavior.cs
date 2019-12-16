@@ -17,7 +17,7 @@ public class CloudBehavior : MonoBehaviour
     {
         transform.Translate(Vector3.right * speed);
 
-        if (transform.position.x > 10)
+        if (transform.position.x > 20)
         {
             Destroy(gameObject);
         }
