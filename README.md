@@ -59,9 +59,9 @@ the homepage?"
 As you do well in your job, you get promoted to higher offices
 to service different DNS requests. The offices include the
 following:
-- District (equivalent of *.google.com)
-- Regional (equivalent of *.*.com)
-- Corporate (equivalent of *.*.* -- Root DNS server)
+- District (equivalent of \*.google.com)
+- Regional (equivalent of \*.\*.com)
+- Corporate (equivalent of \*.\*.\* -- Root DNS server)
 
 This is backwards from the actual lookup process, but it follows
 the idea of an employee rising through the ranks of the company.
