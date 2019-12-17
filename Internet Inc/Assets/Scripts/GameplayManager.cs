@@ -13,14 +13,17 @@ public class GameplayManager : MonoBehaviour
     
     List<SortingAttempt> sortingAttempts;
 
+    [Header("Sorting Objects")]
     [SerializeField] GameObject[] sortingBoxObjects;
     [SerializeField] Text[] sortingBoxText;
     [SerializeField] Text requestURL;
 
+    [Header("Gameplay UI")]
     [SerializeField] Image progressBarImage;
     [SerializeField] Text progressBartText;
     [SerializeField] Text equivalenceUIText;
 
+    [Header("Promotion UI")]
     [SerializeField] Canvas promotionUI;
     AdvanceUI advanceUI; // AdvanceUI component of promotionUI
     [SerializeField] Text promotionHeader;
@@ -29,6 +32,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] Text staySubtext;
     [SerializeField] Text advanceSubtext;
 
+    [Header("Imported Text Files")]
     [SerializeField] TextAsset requestsText;
     [SerializeField] TextAsset domainText;
     [SerializeField] TextAsset equivalenceText;
@@ -42,6 +46,7 @@ public class GameplayManager : MonoBehaviour
     const float PROMOTION_PERCENTAGE = 0.9f;
     const int MAX_CONSIDERED_ATTEMPTS = 45;
 
+    [Header("Threshold Values")]
     [SerializeField] float[] thresholdPercentages;
     [SerializeField] Color[] thresholdColors;
 
@@ -319,7 +324,7 @@ public class GameplayManager : MonoBehaviour
     }
 }
 
-class SortingAttempt
+public class SortingAttempt
 {
     public static int correct = 0;
     public static int incorrect = 0;
