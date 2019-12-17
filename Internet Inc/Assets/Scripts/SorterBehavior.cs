@@ -23,10 +23,16 @@ public class SorterBehavior : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // GetComponent<Image>().color = new Color32(174, 174, 174, 255);
+        CheckCollision(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        CheckCollision(collision);
+    }
+
+    void CheckCollision(Collider2D collision)
+    { 
         // Debug.Log("Colliding with " + collision.name);
 
         if (Input.GetMouseButtonUp(0))
@@ -37,7 +43,7 @@ public class SorterBehavior : MonoBehaviour
                 return;
             }
 
-            Debug.Log(sortingObject.name);
+            // Debug.Log(sortingObject.name);
             string sbTarget = sortingObject.Target;
 
             string[] parts = null;
@@ -45,14 +51,14 @@ public class SorterBehavior : MonoBehaviour
 
             if (SceneManager.GetActiveScene().name.Contains("web_server"))
             {
-                Debug.Log(sbTarget);
-                parts = sbTarget.Split('/');
+                parts = Target.Split('/');
                 if (parts.Length != 2)
                 {
                     return;
-                }
+                } 
 
-                isCorrect = parts[1] == Target;
+                isCorrect = sbTarget == parts[1];
+                // Debug.Log(sbTarget + " - " + parts[1]);
             }
             else
             {
@@ -77,14 +83,14 @@ public class SorterBehavior : MonoBehaviour
                 textG.color = Color.red;
             }
 
-            Debug.Log("Sorter -- " + isCorrect);
+            // Debug.Log("Sorter -- " + isCorrect);
 
             if (gameplayManager != null)
                 gameplayManager.NewSortAttempt(isCorrect);
             else
                 webGameplayManager.NewSortAttempt(isCorrect);
 
-            Debug.Log("Dropped " + collision.name + " ? " + isCorrect);
+            // Debug.Log("Dropped " + collision.name + " ? " + isCorrect);
         }
     }
 

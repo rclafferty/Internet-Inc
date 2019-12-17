@@ -22,6 +22,8 @@ public class WebserverGameplayManager : MonoBehaviour
     [SerializeField] Text progressBartText;
     [SerializeField] Text equivalenceUIText;
 
+    [SerializeField] Text requestSpeechText;
+
     [Header("Promotion UI")]
     [SerializeField] AdvanceUI promotionUI;
     [SerializeField] Text promotionHeader;
@@ -51,10 +53,22 @@ public class WebserverGameplayManager : MonoBehaviour
 
     bool waitingToAdvance;
 
+    string[] requestsTemplates =
+    {
+        "Do you have the ## page?",
+        "Do you know where ## is?",
+        "Have you heard of ##?",
+        "I'm looking for ##.",
+        "Can you find ##?"
+    };
+
+    int requestTemplateIndex;
+
     private void Awake()
     {
         sortingAttempts = new List<SortingAttempt>();
         waitingToAdvance = false;
+        requestTemplateIndex = -1;
 
         domains = new List<string>();
         requests = new List<string>();
@@ -182,7 +196,16 @@ public class WebserverGameplayManager : MonoBehaviour
         currentRequestIndex = thisRequestIndex;
         sortingPlane.Target = requests[currentRequestIndex];
 
-        Debug.Log(sortingPlane.Target);
+        // Debug.Log(sortingPlane.Target);
+
+        int thisTemplateIndex = requestTemplateIndex;
+        do
+        {
+            thisTemplateIndex = Random.Range(0, requestsTemplates.Length);
+        } while (thisTemplateIndex == requestTemplateIndex);
+
+        requestTemplateIndex = thisTemplateIndex;
+        requestSpeechText.text = requestsTemplates[requestTemplateIndex].Replace("##", sortingPlane.Target); ;
     }
 
     /// <summary>

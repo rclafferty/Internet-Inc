@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayManager: {fileID: 0}
+  webGameplayManager: {fileID: 0}
   animatedText: {fileID: 8137563162416968123, guid: 3e5d0106873e6c04ca6320370b7b43ec,
     type: 3}
 --- !u!1 &5782300522863009320
@@ -236,7 +237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 650.7, y: 256}
+  m_AnchoredPosition: {x: 419, y: 159}
   m_SizeDelta: {x: 554, y: 279.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5782300522881009617
@@ -466,6 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayManager: {fileID: 0}
+  webGameplayManager: {fileID: 0}
   animatedText: {fileID: 8137563162416968123, guid: 3e5d0106873e6c04ca6320370b7b43ec,
     type: 3}
 --- !u!1 &5782300523259036297
@@ -1103,6 +1105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayManager: {fileID: 0}
+  webGameplayManager: {fileID: 0}
   animatedText: {fileID: 8137563162416968123, guid: 3e5d0106873e6c04ca6320370b7b43ec,
     type: 3}
 --- !u!1 &5782300524442794869
