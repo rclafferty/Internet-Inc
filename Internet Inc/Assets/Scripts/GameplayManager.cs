@@ -39,9 +39,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] TextAsset certificateText;
 
 #if UNITY_EDITOR
-    const int PROMOTION_THRESHOLD = 5;
+    const int PROMOTION_THRESHOLD = 3;
 #else
-    const int PROMOTION_THRESHOLD = 30;
+    const int PROMOTION_THRESHOLD = 20;
 #endif
     const float PROMOTION_PERCENTAGE = 0.9f;
     const int MAX_CONSIDERED_ATTEMPTS = 45;
@@ -306,11 +306,11 @@ public class GameplayManager : MonoBehaviour
         {
             nextOfficeLocation = "Expand Company";
 
-            promotionHeader.text = "Congratulations!";
-            line = "Now that you've pioneered your way through the company, you should consider expanding your reach internationally.\n\nYou may stay and practice the Root DNS Server protocol or you may continue to expand your company.";
+            promotionHeader.text = "Thanks For Playing";
+            line = "This game was created by Casey Lafferty as part of his master's research in gamification under the advisement of Dr. Stephen Cooper.\n\nHuman characters:\nCurt - cjc83486 - https://opengameart.org/content/rpg-character\nSogomn - https://opengameart.org/content/animated-character\ndbhvk - https://opengameart.org/content/character-sprite-walk-animation\narikel - https://opengameart.org/content/2d-rpg-character-walk-spritesheet\nAll other game assets were created by Casey.";
             promotionTextLocation.text = "";
-            staySubtext.text = "Practice Root\nDNS Lookup";
-            advanceSubtext.text = "Proceed To\n" + nextOfficeLocation;
+            staySubtext.text = "Proceed to\nMain Menu";
+            advanceSubtext.text = "Quit to\nDesktop";
         }
 
         advanceUI.SetAdvanceButtonText("Advance To " + nextOfficeLocation);

@@ -43,9 +43,9 @@ public class WebserverGameplayManager : MonoBehaviour
     [SerializeField] Color[] thresholdColors;
 
 #if UNITY_EDITOR
-    const int PROMOTION_THRESHOLD = 5;
+    const int PROMOTION_THRESHOLD = 3;
 #else
-    const int PROMOTION_THRESHOLD = 30;
+    const int PROMOTION_THRESHOLD = 20;
 #endif
 
     const float PROMOTION_PERCENTAGE = 0.9f;

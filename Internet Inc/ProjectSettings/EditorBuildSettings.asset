@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/title.unity
     guid: e0092e900b6197e429e6bd3a6036e28a
   - enabled: 1
+    path: Assets/Scenes/instructions_web_server2.unity
+    guid: c337af4f95616b440a1acecda5aeabfa
+  - enabled: 1
     path: Assets/Scenes/web_server2.unity
     guid: 4edebf76452c3044f9459a64ee431d94
+  - enabled: 1
+    path: Assets/Scenes/instructions_subdomain.unity
+    guid: dccb49fef5e938e458a84409beff20dd
   - enabled: 1
     path: Assets/Scenes/subdomain.unity
     guid: bbf38f4991e3eb34e95d2766d6a9a8ce
