@@ -1,2 +1,1 @@
-﻿Local Office
-EQ: HTTP Web Server
+﻿Office Of Web Services

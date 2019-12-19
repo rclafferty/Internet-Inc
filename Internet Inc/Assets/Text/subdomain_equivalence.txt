@@ -1,2 +1,1 @@
-District Office
-EQ: Authoritative DNS
+Subdomain District Office

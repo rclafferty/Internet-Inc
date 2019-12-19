@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/web_server2.unity
     guid: 4edebf76452c3044f9459a64ee431d94
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/instructions_subdomain.unity
     guid: dccb49fef5e938e458a84409beff20dd
   - enabled: 1

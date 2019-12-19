@@ -42,6 +42,10 @@ public class WebserverGameplayManager : MonoBehaviour
     [SerializeField] float[] thresholdPercentages;
     [SerializeField] Color[] thresholdColors;
 
+    [Header("People Sprites")]
+    [SerializeField] GameObject[] characters;
+    int currentCharacterIndex;
+
 #if UNITY_EDITOR
     const int PROMOTION_THRESHOLD = 3;
 #else
@@ -49,7 +53,7 @@ public class WebserverGameplayManager : MonoBehaviour
 #endif
 
     const float PROMOTION_PERCENTAGE = 0.9f;
-    const int MAX_CONSIDERED_ATTEMPTS = 45;
+    const int MAX_CONSIDERED_ATTEMPTS = 25;
 
     bool waitingToAdvance;
 
@@ -69,6 +73,7 @@ public class WebserverGameplayManager : MonoBehaviour
         sortingAttempts = new List<SortingAttempt>();
         waitingToAdvance = false;
         requestTemplateIndex = -1;
+        currentCharacterIndex = 0;
 
         domains = new List<string>();
         requests = new List<string>();
@@ -84,6 +89,8 @@ public class WebserverGameplayManager : MonoBehaviour
         {
             requests.Add(s.Trim());
         }
+
+        equivalenceUIText.text = equivalenceText.text;
     }
 
     // Start is called before the first frame update
@@ -99,8 +106,13 @@ public class WebserverGameplayManager : MonoBehaviour
             documents[i].Target = domains[i];
         }
 
+        foreach (GameObject g in characters)
+        {
+            g.SetActive(false);
+        }
+
         SetScore();
-        NewRequest();
+        NewRequest(0, 0);
     }
 
     // Update is called once per frame
@@ -151,7 +163,7 @@ public class WebserverGameplayManager : MonoBehaviour
             scorePercentage = 1;
         }
 
-        if (scorePercentage >= PROMOTION_PERCENTAGE && sortingAttempts.Count >= PROMOTION_THRESHOLD)
+        if (scorePercentage >= PROMOTION_PERCENTAGE/* && sortingAttempts.Count >= PROMOTION_THRESHOLD */)
         {
             if (!waitingToAdvance)
                 Promote();
@@ -205,7 +217,32 @@ public class WebserverGameplayManager : MonoBehaviour
         } while (thisTemplateIndex == requestTemplateIndex);
 
         requestTemplateIndex = thisTemplateIndex;
-        requestSpeechText.text = requestsTemplates[requestTemplateIndex].Replace("##", sortingPlane.Target); ;
+        requestSpeechText.text = requestsTemplates[requestTemplateIndex].Replace("##", sortingPlane.Target);
+
+        NewCharacter();
+    }
+
+    void NewRequest(int requestID, int templateIndex)
+    {
+        currentRequestIndex = requestID;
+        sortingPlane.Target = requests[currentRequestIndex];
+
+        requestTemplateIndex = templateIndex;
+        requestSpeechText.text = requestsTemplates[requestTemplateIndex].Replace("##", sortingPlane.Target);
+
+        NewCharacter();
+    }
+
+    void NewCharacter()
+    {
+        if (waitingToAdvance)
+            return;
+
+        characters[currentCharacterIndex].SetActive(false);
+        int characterIndex = Random.Range(0, characters.Length);
+        characters[characterIndex].SetActive(true);
+
+        currentCharacterIndex = characterIndex;
     }
 
     /// <summary>

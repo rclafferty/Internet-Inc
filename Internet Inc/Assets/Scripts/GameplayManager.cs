@@ -38,6 +38,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] TextAsset equivalenceText;
     [SerializeField] TextAsset certificateText;
 
+    [Header("People Sprites")]
+    [SerializeField] GameObject[] characters;
+    int currentCharacterIndex;
+
 #if UNITY_EDITOR
     const int PROMOTION_THRESHOLD = 3;
 #else
@@ -65,6 +69,7 @@ public class GameplayManager : MonoBehaviour
         sortingAttempts = new List<SortingAttempt>();
         domains = new List<string>();
         requests = new List<string>();
+        currentCharacterIndex = 0;
 
         string[] domainParts;
         string[] requestParts;
@@ -116,8 +121,13 @@ public class GameplayManager : MonoBehaviour
             sortingBoxText[i].text = "Forward\nTo\n" + domains[i].ToLower();
         }
 
+        foreach (GameObject g in characters)
+        {
+            g.SetActive(false);
+        }
+
         SetScore();
-        NewRequest();
+        NewRequest(2, 0, 0);
     }
 
     void SetScore()
@@ -141,6 +151,31 @@ public class GameplayManager : MonoBehaviour
 
         requestURL.text = requests[currentRequestIndex];
         requestURL.gameObject.GetComponent<SortingObjectBehavior>().Target = requests[currentRequestIndex];
+
+        NewCharacter();
+    }
+
+    void NewRequest(int requestID, int domainID, int templateIndex)
+    {
+        currentRequestIndex = requestID;
+        currentDomainIndex = domainID;
+
+        requestURL.text = requests[currentRequestIndex];
+        requestURL.gameObject.GetComponent<SortingObjectBehavior>().Target = requests[currentRequestIndex];
+
+        NewCharacter();
+    }
+
+    void NewCharacter()
+    {
+        if (waitingToAdvance)
+            return;
+
+        characters[currentCharacterIndex].SetActive(false);
+        int characterIndex = Random.Range(0, characters.Length);
+        characters[characterIndex].SetActive(true);
+
+        currentCharacterIndex = characterIndex;
     }
 
     public float CalculateScore()

@@ -1,2 +1,1 @@
-Regional Office
-EQ: Top-Level Domain DNS
+Regional Authoritative Services
